@@ -104,9 +104,8 @@ Ao iniciar o frontend, o Vite mostra a URL local da aplicação.
 
 | Nome | Função |
 |---|---|
-| `_______` | `_______` |
-| `_______` | `_______` |
-| `_______` | `_______` |
+| `Fguimaraes12` | `Desenvolvimento do software` |
+| `Nato dev` | `Desenvolvimento do software` |
 
 ---
 
@@ -116,4 +115,4 @@ Este projeto está sob a licença MIT — veja o arquivo [LICENSE](./LICENSE) pa
 
 ---
 
-<p align="center">Projeto desenvolvido como parte das Atividades Práticas Interdisciplinares de Extensão II — Sistemas de Informação</p>
+<p align="center">Projeto desenvolvido como parte das Atividades Práticas Interdisciplinares de Extensão II — Sistemas de Informação Universidade 7 de setembro</p>
