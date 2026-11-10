@@ -1,7 +1,14 @@
 node_modules/
 dist/
 .vite/
+backend/src/generated/prisma/
 *.tsbuildinfo
 .env
 .env.*
 !.env.example
+
+playwright-report/
+test-results/
+
+# Credenciais individuais geradas exclusivamente para homologação sintética.
+deploy/homolog/private/
