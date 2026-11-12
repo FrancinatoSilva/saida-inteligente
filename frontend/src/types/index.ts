@@ -28,5 +28,18 @@ export type Release = {
 export function salaLabel(sala: Sala) {
   return sala.segmento.nome === "Educação Infantil"
     ? `Infantil ${["", "", "II", "III", "IV", "V"][sala.serie]}`
-    : `${sala.serie}º ${sala.segmento.nome === "Ensino Médio" ? "série" : "ano"}`;
+    : sala.segmento.nome === "Ensino Médio"
+      ? `${sala.serie}ª série`
+      : `${sala.serie}º ano`;
+}
+/** Sala + segmento em forma curta, ex.: "1º ano · Fundamental I", "2ª série · Médio". */
+export function salaCurta(sala: Sala) {
+  if (sala.segmento.nome === "Educação Infantil") return salaLabel(sala);
+  return `${salaLabel(sala)} · ${sala.segmento.nome.replace(/^Ensino /, "")}`;
+}
+export function hora(iso: string) {
+  return new Date(iso).toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }

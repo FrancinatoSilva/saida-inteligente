@@ -5,6 +5,7 @@ import {
   Outlet,
   Route,
   Routes,
+  useLocation,
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { Login, home } from "./pages/Login";
@@ -17,38 +18,64 @@ function Protected({ role }: { role: string }) {
   if (user.role !== role) return <Navigate to={home(user.role)} replace />;
   return <Outlet />;
 }
+const pageNames: Record<string, string> = {
+  "/gestao": "Gestão",
+  "/portaria": "Portaria",
+  "/sala": "Sala",
+};
 function Shell() {
   const { user, loading, error, logout, retry } = useAuth();
   const [logoutError, setLogoutError] = useState("");
-  if (loading) return <main role="status">Verificando sessão…</main>;
+  const { pathname } = useLocation();
+  if (loading)
+    return (
+      <main className="state" role="status">
+        Verificando sessão…
+      </main>
+    );
   if (error)
     return (
-      <main>
-        <p role="alert">{error}</p>
-        <button onClick={retry}>Tentar novamente</button>
+      <main className="state">
+        <p className="notice error" role="alert">
+          {error}
+        </p>
+        <button className="retry" style={{ marginTop: 16 }} onClick={retry}>
+          Tentar novamente
+        </button>
       </main>
     );
   return (
     <>
-      <header>
-        <a href="/" className="brand">
-          ↗ Saída Inteligente
-        </a>
-        {user && (
-          <div className="actions">
-            <span>{user.usuario}</span>
-            <button
-              className="secondary"
-              onClick={() => {
-                void logout().catch((e) => setLogoutError(e.message));
-              }}
-            >
-              Sair
-            </button>
+      {user && (
+        <header className="topbar">
+          <div className="topbar-inner">
+            <div className="topbar-left">
+              <a href="/" className="wordmark">
+                Saída Inteligente
+              </a>
+              {pageNames[pathname] && (
+                <span className="topbar-page">{pageNames[pathname]}</span>
+              )}
+            </div>
+            <div className="topbar-user">
+              <span>{user.usuario}</span>
+              <button
+                className="secondary small"
+                onClick={() => {
+                  void logout().catch((e) => setLogoutError(e.message));
+                }}
+              >
+                Sair
+              </button>
+            </div>
           </div>
-        )}
-      </header>
-      {logoutError && <p role="alert">{logoutError}</p>}
+        </header>
+      )}
+      {logoutError && (
+        <p className="notice error" role="alert">
+          {logoutError}
+        </p>
+      )}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route element={<Protected role="GESTAO" />}>
