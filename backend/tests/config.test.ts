@@ -70,6 +70,8 @@ test("segredo JWT ausente, placeholder ou curto é recusado", () => {
 test("seed convencional é bloqueado em produção antes de conectar ao banco", () => {
   const result = spawnSync("npm", ["run", "prisma:seed"], {
     encoding: "utf8",
+    // No Windows o npm é npm.cmd e o Node só o executa via shell.
+    shell: process.platform === "win32",
     env: {
       ...process.env,
       NODE_ENV: "production",
