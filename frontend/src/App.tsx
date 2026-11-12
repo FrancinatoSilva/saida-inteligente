@@ -5,28 +5,22 @@ import {
   Outlet,
   Route,
   Routes,
-  useLocation,
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { Login, home } from "./pages/Login";
 import { Gestao } from "./pages/Gestao";
 import { Portaria } from "./pages/Portaria";
 import { Sala } from "./pages/Sala";
+import { rotuloConta } from "./types";
 function Protected({ role }: { role: string }) {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   if (user.role !== role) return <Navigate to={home(user.role)} replace />;
   return <Outlet />;
 }
-const pageNames: Record<string, string> = {
-  "/gestao": "Gestão",
-  "/portaria": "Portaria",
-  "/sala": "Sala",
-};
 function Shell() {
   const { user, loading, error, logout, retry } = useAuth();
   const [logoutError, setLogoutError] = useState("");
-  const { pathname } = useLocation();
   if (loading)
     return (
       <main className="state" role="status">
@@ -49,16 +43,21 @@ function Shell() {
       {user && (
         <header className="topbar">
           <div className="topbar-inner">
-            <div className="topbar-left">
-              <a href="/" className="wordmark">
-                Saída Inteligente
-              </a>
-              {pageNames[pathname] && (
-                <span className="topbar-page">{pageNames[pathname]}</span>
+            <a href="/" className="wordmark">
+              Saída Inteligente
+            </a>
+            <div className="plate" aria-label="Conta em uso">
+              <span className="plate-title">{rotuloConta(user).titulo}</span>
+              {rotuloConta(user).detalhe && (
+                <span className="plate-detail">
+                  {rotuloConta(user).detalhe}
+                </span>
               )}
             </div>
             <div className="topbar-user">
-              <span>{user.usuario}</span>
+              <span className="account-id" title="Usuário da conta">
+                {user.usuario}
+              </span>
               <button
                 className="secondary small"
                 onClick={() => {

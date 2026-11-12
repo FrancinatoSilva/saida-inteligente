@@ -14,4 +14,16 @@ export const usuarioRepository = {
       },
     });
   },
+  findSala(id: number) {
+    return prisma.sala.findUnique({
+      where: { id },
+      select: { serie: true, segmento: { select: { nome: true } } },
+    });
+  },
+  findSegmento(id: number) {
+    return prisma.segmento.findUnique({
+      where: { id },
+      select: { nome: true },
+    });
+  },
 };

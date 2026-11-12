@@ -43,7 +43,24 @@ function getJwtExpiration(): JwtExpiration {
   return { expiresIn, maxAgeMs };
 }
 
+export type Escopo = { segmento: string; serie: number | null } | null;
+
+type Escopado = { salaId: number | null; segmentoId: number | null };
+
 export const authService = {
+  /** Sala e segmento da conta em forma legível, só para exibição. */
+  async escopo({ salaId, segmentoId }: Escopado): Promise<Escopo> {
+    if (salaId !== null) {
+      const sala = await usuarioRepository.findSala(salaId);
+      return sala ? { segmento: sala.segmento.nome, serie: sala.serie } : null;
+    }
+    if (segmentoId !== null) {
+      const segmento = await usuarioRepository.findSegmento(segmentoId);
+      return segmento ? { segmento: segmento.nome, serie: null } : null;
+    }
+    return null;
+  },
+
   async login({ usuario, senha }: LoginInput) {
     const secret = jwtSecret();
     const user = await usuarioRepository.findByUsername(usuario);
@@ -80,6 +97,7 @@ export const authService = {
         role: user.role,
         salaId: user.salaId,
         segmentoId: user.segmentoId,
+        escopo: await authService.escopo(user),
       },
     };
   },

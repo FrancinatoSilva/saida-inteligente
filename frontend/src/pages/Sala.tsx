@@ -58,14 +58,9 @@ export function Sala() {
     };
   }, [revision]);
   const [latest, ...earlier] = items;
-  // Conta de uma sala: a sala vem de qualquer chamada. Sala geral: várias salas,
-  // então a sala aparece em cada chamada.
+  // Sala geral recebe chamadas de várias salas: a sala aparece em cada chamada.
   const geral = !user?.salaId;
-  const salaDaConta = !geral ? items.find((i) => i.aluno.sala)?.aluno.sala : undefined;
-  const segmentoGeral = geral ? items.find((i) => i.aluno.sala)?.aluno.sala?.segmento.nome : undefined;
-  const contexto = [hoje(), salaDaConta ? salaCurta(salaDaConta) : segmentoGeral]
-    .filter(Boolean)
-    .join(" · ");
+  const contexto = hoje();
   return (
     <main>
       <div className="page-head">

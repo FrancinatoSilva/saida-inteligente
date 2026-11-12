@@ -139,10 +139,9 @@ test(
           });
           assert.equal(wrong.status, 401);
           assert.deepEqual(wrong.body, missing.body);
-          assert.equal(
-            (await request("/auth/me", sala)).body.usuario.role,
-            "SALA",
-          );
+          const me = (await request("/auth/me", sala)).body.usuario;
+          assert.equal(me.role, "SALA");
+          assert.equal(typeof me.escopo?.segmento, "string");
           assert.match(
             (await request("/auth/logout", gestao, "POST")).cookie,
             /Expires=Thu, 01 Jan 1970/,

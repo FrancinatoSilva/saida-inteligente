@@ -83,12 +83,12 @@ code {
 }
 .topbar-inner {
   max-width: 1200px;
-  height: 56px;
+  height: 64px;
   margin: 0 auto;
   padding: 0 24px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
 }
 .wordmark {
@@ -97,24 +97,40 @@ code {
   color: var(--text);
   text-decoration: none;
 }
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
+/* Placa da conta: como a plaquinha na porta da sala */
+.plate {
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  padding: 6px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--bg);
+  text-align: center;
+  line-height: 1.2;
 }
-.topbar-page {
+.plate-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+.plate-detail {
+  font-size: 12px;
   color: var(--text-2);
-  font-size: 14px;
-  padding-left: 12px;
-  border-left: 1px solid var(--line-strong);
 }
 .topbar-user {
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 14px;
   color: var(--text-2);
+}
+
+.account-id {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
 }
 
 /* Página */
@@ -570,7 +586,20 @@ td.end .actions {
   .topbar-inner {
     padding: 0 16px;
   }
-  .topbar-user span {
+  .topbar-inner {
+    grid-template-columns: auto 1fr auto;
+  }
+  .wordmark {
+    font-size: 14px;
+  }
+  .plate {
+    justify-self: center;
+    padding: 4px 12px;
+  }
+  .plate-title {
+    font-size: 15px;
+  }
+  .account-id {
     display: none;
   }
   .toolbar {
