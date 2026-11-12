@@ -11,7 +11,6 @@ import { Login, home } from "./pages/Login";
 import { Gestao } from "./pages/Gestao";
 import { Portaria } from "./pages/Portaria";
 import { Sala } from "./pages/Sala";
-import { rotuloConta } from "./types";
 function Protected({ role }: { role: string }) {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
@@ -46,18 +45,7 @@ function Shell() {
             <a href="/" className="wordmark">
               Saída Inteligente
             </a>
-            <div className="plate" aria-label="Conta em uso">
-              <span className="plate-title">{rotuloConta(user).titulo}</span>
-              {rotuloConta(user).detalhe && (
-                <span className="plate-detail">
-                  {rotuloConta(user).detalhe}
-                </span>
-              )}
-            </div>
             <div className="topbar-user">
-              <span className="account-id" title="Usuário da conta">
-                {user.usuario}
-              </span>
               <button
                 className="secondary small"
                 onClick={() => {

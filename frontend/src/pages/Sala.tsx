@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { api } from "../services/api";
 import { Feedback } from "../components/Feedback";
 import { useAuth } from "../hooks/useAuth";
-import { hora, salaCurta, type Release } from "../types";
+import { hora, rotuloConta, salaCurta, type Release } from "../types";
 const hoje = () =>
   new Date().toLocaleDateString("pt-BR", {
     weekday: "long",
@@ -60,15 +60,15 @@ export function Sala() {
   const [latest, ...earlier] = items;
   // Sala geral recebe chamadas de várias salas: a sala aparece em cada chamada.
   const geral = !user?.salaId;
-  const contexto = hoje();
+  const conta = user ? rotuloConta(user) : { titulo: "Sala" };
+  const contexto = [conta.detalhe, hoje()].filter(Boolean).join(" · ");
   return (
     <main>
       <div className="page-head">
-        <div>
-          <h1>Chamadas da portaria</h1>
-          <p>
-            {contexto.charAt(0).toUpperCase() + contexto.slice(1)}
-          </p>
+        <div className="door">
+          <span className="door-kicker">Chamadas da portaria</span>
+          <h1>{conta.titulo}</h1>
+          <p>{contexto}</p>
         </div>
         <p role="status" className={connected ? "live" : "live off"}>
           <span className="dot" aria-hidden="true" />
