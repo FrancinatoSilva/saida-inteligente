@@ -26,36 +26,34 @@ export function Login() {
   }
   return (
     <main className="login">
-      <div className="brand-mark" aria-hidden="true">
-        ↗
+      <div className="login-box">
+        <span className="wordmark">Saída Inteligente</span>
+        <h1>Entrar</h1>
+        <p>Acesso da gestão, da portaria e das salas</p>
+        <form className="panel" onSubmit={submit}>
+          <label>
+            Usuário
+            <input
+              autoComplete="username"
+              required
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+            />
+          </label>
+          <label>
+            Senha
+            <input
+              type="password"
+              autoComplete="current-password"
+              required
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+            />
+          </label>
+          <Feedback error={error} />
+          <button disabled={busy}>{busy ? "Entrando…" : "Entrar"}</button>
+        </form>
       </div>
-      <p className="eyebrow">SAÍDA INTELIGENTE</p>
-      <h1>Uma saída mais tranquila.</h1>
-      <p>Acesso para gestão, portaria e salas de aula.</p>
-      <form className="card" onSubmit={submit}>
-        <h2>Entre na sua conta</h2>
-        <label>
-          Usuário
-          <input
-            autoComplete="username"
-            required
-            value={usuario}
-            onChange={(e) => setUsuario(e.target.value)}
-          />
-        </label>
-        <label>
-          Senha
-          <input
-            type="password"
-            autoComplete="current-password"
-            required
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
-        </label>
-        <Feedback error={error} />
-        <button disabled={busy}>{busy ? "Entrando…" : "Entrar"}</button>
-      </form>
     </main>
   );
 }

@@ -23,7 +23,7 @@ export function SchoolFilter({
             onSala("");
           }}
         >
-          <option value="">Selecione o segmento</option>
+          <option value="">Selecione</option>
           {[...new Set(salas.map((s) => s.segmento.nome))].map((s) => (
             <option key={s}>{s}</option>
           ))}
@@ -36,7 +36,7 @@ export function SchoolFilter({
           disabled={!segmento}
           onChange={(e) => onSala(e.target.value)}
         >
-          <option value="">Selecione a sala</option>
+          <option value="">Selecione</option>
           {salas
             .filter((s) => s.segmento.nome === segmento)
             .map((s) => (

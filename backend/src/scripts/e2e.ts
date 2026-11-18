@@ -20,7 +20,12 @@ const testEnv = {
   NODE_ENV: "test",
 };
 function run(args: string[]) {
-  const result = spawnSync("npm", args, { env: testEnv, stdio: "inherit" });
+  // No Windows o npm é npm.cmd e o Node só o executa via shell; os argumentos são fixos.
+  const result = spawnSync("npm", args, {
+    env: testEnv,
+    stdio: "inherit",
+    shell: process.platform === "win32",
+  });
   if (result.status !== 0)
     throw new Error(`Comando npm ${args.join(" ")} falhou.`);
 }

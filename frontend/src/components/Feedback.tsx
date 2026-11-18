@@ -6,7 +6,7 @@ export function Feedback({
   message?: string;
 }) {
   return (
-    <>
+    <div className="feedback">
       {error && (
         <p className="notice error" role="alert">
           {error}
@@ -17,6 +17,6 @@ export function Feedback({
           {message}
         </p>
       )}
-    </>
+    </div>
   );
 }

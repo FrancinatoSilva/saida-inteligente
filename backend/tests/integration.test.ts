@@ -39,9 +39,9 @@ test(
         >
       | undefined;
     try {
-      execFileSync("npm", ["run", "prisma:migrate:deploy"], { stdio: "pipe" });
-      execFileSync("npm", ["run", "prisma:seed"], { stdio: "pipe" });
-      execFileSync("npm", ["run", "prisma:seed"], { stdio: "pipe" });
+      execFileSync("npm", ["run", "prisma:migrate:deploy"], { stdio: "pipe", shell: process.platform === "win32" });
+      execFileSync("npm", ["run", "prisma:seed"], { stdio: "pipe", shell: process.platform === "win32" });
+      execFileSync("npm", ["run", "prisma:seed"], { stdio: "pipe", shell: process.platform === "win32" });
       ({ prisma } = await import("../src/database/prisma.js"));
       const client = prisma;
       const { app } = await import("../src/app.js");
@@ -139,10 +139,9 @@ test(
           });
           assert.equal(wrong.status, 401);
           assert.deepEqual(wrong.body, missing.body);
-          assert.equal(
-            (await request("/auth/me", sala)).body.usuario.role,
-            "SALA",
-          );
+          const me = (await request("/auth/me", sala)).body.usuario;
+          assert.equal(me.role, "SALA");
+          assert.equal(typeof me.escopo?.segmento, "string");
           assert.match(
             (await request("/auth/logout", gestao, "POST")).cookie,
             /Expires=Thu, 01 Jan 1970/,

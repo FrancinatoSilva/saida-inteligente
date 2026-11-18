@@ -22,3 +22,12 @@ export const loginController: RequestHandler = async (
     next(error);
   }
 };
+
+export const meController: RequestHandler = async (request, response, next) => {
+  try {
+    const escopo = await authService.escopo(request.user);
+    response.json({ usuario: { ...request.user, escopo } });
+  } catch (error) {
+    next(error);
+  }
+};
